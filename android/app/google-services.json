@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82017911648",
+    "project_id": "iron-lifter-86c21",
+    "storage_bucket": "iron-lifter-86c21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82017911648:android:39af87b4b828d720595405",
+        "android_client_info": {
+          "package_name": "com.iron_Lifter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82017911648-32ophcjg51v3aojpffkhqh3fgj5d7dkj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFFXzZkRhDhz6Yh826ZwSdN32HmEZJ_n0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82017911648-32ophcjg51v3aojpffkhqh3fgj5d7dkj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
