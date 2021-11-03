@@ -147,8 +147,18 @@ class _SignInScreenState extends State<SignInScreen> {
     try {
       DocumentSnapshot userSnapshot = await Firestore.instance
           .collection("users")
-          .document(emailLoginController.text)
-          .get();
+          .where("email", isEqualTo: emailLoginController.text)
+          .limit(1)
+          .getDocuments()
+          .then((value) {
+            if(value.documents.length > 0){
+              print(value.documents.single.data);
+              return value.documents.single;
+            } else {
+              return null;
+            }
+          },
+        );
       globals.currentUser = UserModel.toObject(userSnapshot);
       if (globals.currentUser.password == passwordLoginController.text) {
         await Navigator.pushReplacementNamed(context, 'HomePage');
