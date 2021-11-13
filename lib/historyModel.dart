@@ -30,7 +30,7 @@ class HistoryModel {
     map["date"] = date;
     map["name"] = name;
     map["mobile"] = mobile;
-    map["yogas"] = gym;
+    map["gym"] = gym;
     map["problems"] = problems;
     if (id != null) {
       map["id"] = id;

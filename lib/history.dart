@@ -23,7 +23,8 @@ class _HistoryState extends State<History> {
             child: StreamBuilder(
                 stream: db
                     .collection('History')
-                    .where('mobile', isEqualTo: globals.mobile)
+                    .document(globals.mobile)
+                    .collection('history')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
@@ -89,7 +90,7 @@ class _HistoryState extends State<History> {
                     ),
                     Row(
                       children: [
-                        Text('Yogas Prescribed : ',
+                        Text('Gym Prescribed : ',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600)),
                         Text(historyDoc.gym,

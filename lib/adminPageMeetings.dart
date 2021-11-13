@@ -250,7 +250,7 @@ class _AdminpageMeetingsState extends State<AdminpageMeetings> {
                                                     if (value.isEmpty) {
                                                       return 'Please enter some text';
                                                     }
-                                                    return null;
+                                                    return '1';
                                                   },
                                                   onSaved: (value) {
                                                     yogas = value.trim();
@@ -287,6 +287,8 @@ class _AdminpageMeetingsState extends State<AdminpageMeetings> {
                                                     history.toMap();
                                                 await Firestore.instance
                                                     .collection('History')
+                                                    .document(globals.mobile)
+                                                    .collection("history")
                                                     .document(meetingData.date +
                                                         ' ' +
                                                         meetingData.time)

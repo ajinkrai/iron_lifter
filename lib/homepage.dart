@@ -78,121 +78,40 @@ class _HomePageScreenState extends State<HomePageScreen> {
             'iron Lifter',
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
           ),
+          actions: <Widget>[
+            FlatButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'BookingPage');
+                },
+                icon: Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Booking',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ))
+          ],
         ),
-        body: Container(
-            child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              Container(
-                height: 250.0,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fitHeight,
-                      image: AssetImage('assets/img/logo_title.jpg')),
-                ),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Enter your Height'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  height = value.trim();
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Enter your Weight'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  weight = value.trim();
-                },
-              ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: 'Enter Your Age'),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  age = value.trim();
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    hintText:
-                        'Enter your Health Problems / Diseases\nseparated by commas(,)'),
-                maxLines: null,
-                minLines: null,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  problems = value.trim();
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () async {
-                    requestModel.email = globals.currentUser.email;
-                    requestModel.firstName = globals.currentUser.firstName;
-                    requestModel.lastName = globals.currentUser.lastName;
-                    requestModel.mobile = globals.currentUser.mobile;
-                    var requestMap = requestModel.toMap();
-                    // Store user in Database
-                    _formKey.currentState.save();
-                    print(height + weight + age + problems);
-                    Firestore.instance
-                        .collection('users')
-                        .document(globals.currentUser.email)
-                        .collection('Records')
-                        .document('details')
-                        .setData({
-                      "height": height,
-                      "weight": weight,
-                      "age": age,
-                      "problems": problems
-                    });
-                    await db
-                        .collection('requests')
-                        .document(globals.currentUser.email)
-                        .setData(requestMap);
-                    // await showDialog(
-                    //     context: context,
-                    //     child: AlertDialog(
-                    //       title: Text('Request Raised'),
-                    //       content: Text(
-                    //           'Your data hade been submitted and request have been raised and soon you will get the callback to fix the meeting date and time.'),
-                    //       actions: [
-                    //         RaisedButton(
-                    //           onPressed: () {
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: Text('OK'),
-                    //         )
-                    //       ],
-                    //     ));
-                  },
-                  child: Text('Submit data and\nRaise a Request'),
-                ),
-              ),
-            ],
-          ),
-        )));
+        body: SingleChildScrollView(
+            child: Container(
+                child: Column(
+          children: [
+            Stack(alignment: Alignment.center, children: <Widget>[
+              Image(image: AssetImage('assets/img/logo_title.jpg')),
+            ]),
+            Text(
+              "A gym is an indoor sports facility that also has physical therapy to help the injured recover. Fuerza gym is one with all the necessary amenities that have an active cult pass to all the members who own a Cult.fit gym membership. Anybody can access this gym with their cult pass at any time. Fuerza gym HSR in Bangalore has an excellent well-lit gym that is airier with many air conditioners",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Stack(alignment: Alignment.center, children: <Widget>[
+              Image(image: AssetImage('assets/img/logo_title.jpg')),
+            ]),
+            Text(
+                "The gym near me ITI Layout in Bangalore has various facilities or amenities and to mention a few they are: The best gym near me HSR in Fuerza has CCTV cameras fixed all around the premise to make sure that all the people visiting the gym are safe and sound. Fuerza gym has a broad and ample bike parking that ensures to allow many two-wheelers parked at the same time under the gym control. The gym near me ITI layout in Bangalore follows stringent safety protocol to prevent the widespread of the pandemic",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+          ],
+        ))));
   }
 }

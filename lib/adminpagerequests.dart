@@ -66,7 +66,7 @@ class _AdminpageState extends State<Adminpage> {
               ]),
         ),
         appBar: AppBar(
-          title: Text('Yog Arogyam - Admin - Requests',
+          title: Text('iron_lifter - Admin - Requests',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
         ),
         body: Container(

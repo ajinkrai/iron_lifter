@@ -14,6 +14,11 @@ class _BookConsultationState extends State<BookConsultation> {
   RequestModel requestModel = new RequestModel();
   DateTime selectedDate = DateTime.now();
   final db = Firestore.instance;
+  final _formKey = GlobalKey<FormState>();
+  var height;
+  var weight;
+  var age;
+  var problems;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,65 +26,103 @@ class _BookConsultationState extends State<BookConsultation> {
           title: Text('Book a Consultation'),
         ),
         body: Container(
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
+            child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                height: 250.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fitHeight,
+                      image: AssetImage('assets/img/logo_title.jpg')),
                 ),
-                Text(
-                  'Raise a request\nto get a callback\nfor booking the\nconsultation',
-                  style: TextStyle(
-                      fontSize: 32, fontWeight: FontWeight.w600, height: 1.25),
-                  textAlign: TextAlign.center,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Enter your Height'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  height = value.trim();
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Enter your Weight'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  weight = value.trim();
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(labelText: 'Enter Your Age'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  age = value.trim();
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: 'Purpose to join gym'),
+                maxLines: null,
+                minLines: null,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  problems = value.trim();
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () async {
+                    requestModel.email = globals.currentUser.email;
+                    requestModel.firstName = globals.currentUser.firstName;
+                    requestModel.lastName = globals.currentUser.lastName;
+                    requestModel.mobile = globals.currentUser.mobile;
+                    var requestMap = requestModel.toMap();
+                    // Store user in Database
+                    _formKey.currentState.save();
+                    print(height + weight + age + problems);
+                    Firestore.instance
+                        .collection('users')
+                        .document(globals.currentUser.email)
+                        .collection('Records')
+                        .document('details')
+                        .setData({
+                      "height": height,
+                      "weight": weight,
+                      "age": age,
+                      "problems": problems
+                    });
+                    await db
+                        .collection('requests')
+                        .document(globals.currentUser.email)
+                        .setData(requestMap);
+                    await Navigator.pop(context);
+                  },
+                  child: Text('Submit data and\nRaise a Request'),
                 ),
-                SizedBox(
-                  height: 80,
-                ),
-                RaisedButton(
-                    onPressed: () async {
-                      requestModel.email = globals.currentUser.email;
-                      requestModel.firstName = globals.currentUser.firstName;
-                      requestModel.lastName = globals.currentUser.lastName;
-                      requestModel.mobile = globals.currentUser.mobile;
-                      var requestMap = requestModel.toMap();
-                      await db
-                          .collection('requests')
-                          .document(DateTime.now().toString())
-                          .setData(requestMap);
-                      // await showDialog(
-                      //     context: context,
-                      //     child: AlertDialog(
-                      //       title: Text('Request Raised'),
-                      //       content: Text(
-                      //           'Your Request have been raised and soon you will get the callback to fix the meeting date and time.'),
-                      //       actions: [
-                      //         RaisedButton(
-                      //           onPressed: () {
-                      //             Navigator.pop(context);
-                      //           },
-                      //           child: Text('OK'),
-                      //         )
-                      //       ],
-                      //     )).then((value) => Navigator.pop(context));
-                    },
-                    child: Text(
-                      'Raise Request',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-                    )),
-                SizedBox(
-                  height: 180,
-                ),
-                (globals.currentUser.firstMeet)
-                    ? Text(
-                        'This is your First consultation\nhence it would be free',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      )
-                    : Text(' ')
-              ],
-            )));
+              ),
+            ],
+          ),
+        )));
   }
 }

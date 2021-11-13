@@ -17,7 +17,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.brown.shade50,
       body: ListView(
         children: <Widget>[
           FractionallySizedBox(
@@ -74,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "If you don't have an account\nPlease make one by signing up",
+                    " Not a member?sign up now",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
@@ -102,30 +102,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 color: Colors.orange[600],
                 fontWeight: FontWeight.bold),
           ),
-          Text(
-            "With 💙",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20,
-                color: Colors.blue[800],
-                fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "For The World",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20,
-                color: Colors.green[700],
-                fontWeight: FontWeight.bold),
-          ),
           SizedBox(height: 15),
           FractionallySizedBox(
               widthFactor: 1 / 3,
               child: RaisedButton(
                 onPressed: () {
                   if (emailLoginController.text.trim() ==
-                      'kareriapawan@gmail.com') {
-                    if (passwordLoginController.text == 'simran25')
+                      'ajinkrai0786@gmail.com') {
+                    if (passwordLoginController.text == 'ajink12')
                       Navigator.pushReplacementNamed(
                           context, 'AdminPageRequests');
                   } else {
@@ -150,15 +134,16 @@ class _SignInScreenState extends State<SignInScreen> {
           .where("email", isEqualTo: emailLoginController.text)
           .limit(1)
           .getDocuments()
-          .then((value) {
-            if(value.documents.length > 0){
-              print(value.documents.single.data);
-              return value.documents.single;
-            } else {
-              return null;
-            }
-          },
-        );
+          .then(
+        (value) {
+          if (value.documents.length > 0) {
+            print(value.documents.single.data);
+            return value.documents.single;
+          } else {
+            return null;
+          }
+        },
+      );
       globals.currentUser = UserModel.toObject(userSnapshot);
       if (globals.currentUser.password == passwordLoginController.text) {
         await Navigator.pushReplacementNamed(context, 'HomePage');

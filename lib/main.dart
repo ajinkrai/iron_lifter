@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_Lifter/adminReports.dart';
 import 'package:iron_Lifter/adminpagerequests.dart';
+import 'package:iron_Lifter/consultation.dart';
 import 'package:iron_Lifter/homepage.dart';
 import 'package:iron_Lifter/login.dart';
 import 'package:iron_Lifter/profile.dart';
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Yog Arogyam',
+      title: 'Iron Lifter',
       initialRoute: 'SignIn',
       routes: {
         'SignIn': (context) => SignInScreen(),
@@ -39,6 +40,7 @@ class _MyAppState extends State<MyApp> {
         'AdminReports': (context) => AdminReports(),
         'HistoryPage': (context) => History(),
         'HistorySearch': (context) => HistorySearch(),
+        'BookingPage': (context) => BookConsultation(),
       },
     );
   }
